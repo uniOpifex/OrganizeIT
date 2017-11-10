@@ -1,24 +1,43 @@
-# README
+# OrganizeIT
+![alt text](/docs/erd/erd.jpg)
+## a tool and hardware organization app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+>[TrelloBoard/ UserStories](https://trello.com/b/IMYrEVx6)  
+[alt text](/docs/erd/erd.jpg)
+>[GIT](https://github.com/uniOpifex/ChatBoxGenerator)  
+>[Heroku](https://organize-it-again.herokuapp.com/)
+### Wireframe Pages: [Link](https://marvelapp.com/4597geh)
 
-Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
 
-* Configuration
+### Reach:
 
-* Database creation
+App will be forum generator  
+User can create Thread and commit comments to those threads
 
-* Database initialization
+Four Models
 
-* How to run the test suite
+Users
+Collections
+Items
+Storage
 
-* Services (job queues, cache servers, search engines, etc.)
+All models have full CRUD 
 
-* Deployment instructions
 
-* ...
+### Stretch
+
+Site will have a store locator page with Google Maps
+
+### --Additional Resources  
+>[markdown editor](https://jbt.github.io/markdown-editor/)
+
+
+
+
+
+
+
+
+
