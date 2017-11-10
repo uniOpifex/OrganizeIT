@@ -8,13 +8,6 @@
 ### Wireframe Pages: [Link](https://marvelapp.com/4597geh)
 
 
-
-
-### Reach:
-
-App will be forum generator  
-User can create Thread and commit comments to those threads
-
 Four Models
 
 Users
