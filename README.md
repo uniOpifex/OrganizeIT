@@ -3,7 +3,7 @@
 
 >[TrelloBoard/ UserStories](https://trello.com/b/IMYrEVx6)  
 ![alt text](/docs/erd/erd.jpg)
->[GIT]()https://github.com/uniOpifex/OrganizeIT  
+>[GIT](https://github.com/uniOpifex/OrganizeIT)  
 >[Heroku](https://organize-it-again.herokuapp.com/)
 ### Wireframe Pages: [Link](https://marvelapp.com/4597geh)
 
