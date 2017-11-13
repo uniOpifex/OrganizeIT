@@ -5,10 +5,14 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import {saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
+import {
+  saveAuthTokens,
+  setAxiosDefaults,
+  userIsLoggedIn
+} from "./util/SessionHeaderUtil";
 
 import SignUpLogIn from "./components/SignUpLogIn";
-import ItemsList from "./components/ItemsList"
+import ItemsList from "./components/ItemsList";
 import axios from "axios";
 
 class App extends Component {
@@ -19,24 +23,23 @@ class App extends Component {
 
   async componentWillMount() {
     try {
-      const signedIn = userIsLoggedIn()
-      
+      const signedIn = userIsLoggedIn();
+
       let items = [];
-      if (this.state.signedIn) {
-        setAxiosDefaults()
-        
+      if (signedIn) {
+        setAxiosDefaults();
         items = await this.getItems();
       }
-
       this.setState({
-        items,
+        items: items,
         signedIn
-
       });
     } catch (error) {
       console.log(error);
     }
   }
+
+  c;
 
   getItems = async () => {
     try {
@@ -56,8 +59,8 @@ class App extends Component {
         password_confirmation: password_confirmation
       };
       const response = await axios.post("/auth", payload);
-      saveAuthTokens(response.headers)
-      
+      saveAuthTokens(response.headers);
+
       this.setState({ signedIn: true });
     } catch (error) {
       console.log(error);
@@ -71,28 +74,40 @@ class App extends Component {
         password
       };
       const response = await axios.post("/auth/sign_in", payload);
-      saveAuthTokens(response.headers)
-      const items = await this.getItems()
-      
+      saveAuthTokens(response.headers);
+      const items = await this.getItems();
+
       this.setState({ signedIn: true, items });
     } catch (error) {
       console.log(error);
     }
   };
 
-  createItem = async (title, content,userId) => {
+  createItem = async (title,content) => {
     try {
       const payload = {
         title,
-        content,
-        userId
+        content
       };
-      await axios.post("/items/${postId}", payload);
-      this.setState({ posts });
-    } catch (error) {
+      await axios.post(`/items/`, payload)
+      } catch (error) {
       console.log(error);
+      alert("some error occurred");
     }
-  }
+  };
+
+
+  updateItem = async () => {
+    try {
+      const itemId = this.props.match.params.cityId;
+      const response = await axios.get(`/post/${itemId}`);
+      await this.setState({ item: response.data });
+      const itemResponse = await axios.get(`/post`);
+      await this.setState({ items: itemResponse.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   render() {
     const SignUpLogInComponent = () => (
@@ -100,20 +115,22 @@ class App extends Component {
     );
 
     const ItemsComponent = () => (
-      <ItemsList
-          posts={this.state.items}/>
-  )
+      <ItemsList items={this.state.items} createItem={this.createItem} />
+    );
 
     return (
       <Router>
         <div>
           <Switch>
             <Route exact path="/signUp" render={SignUpLogInComponent} />
-            <Route exact path="/items" render={ItemsComponent}/>
-
+            <Route exact path="/items" render={ItemsComponent} />
           </Switch>
 
-          {this.state.signedIn ? <Redirect to="/posts"/> : <Redirect to="/signUp" />}
+          {this.state.signedIn ? (
+            <Redirect to="/items" />
+          ) : (
+            <Redirect to="/signUp" />
+          )}
         </div>
       </Router>
     );
