@@ -80,6 +80,20 @@ class App extends Component {
     }
   };
 
+  createItem = async (title, content,userId) => {
+    try {
+      const payload = {
+        title,
+        content,
+        userId
+      };
+      await axios.post("/items/${postId}", payload);
+      this.setState({ posts });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   render() {
     const SignUpLogInComponent = () => (
       <SignUpLogIn signUp={this.signUp} signIn={this.signIn} />
