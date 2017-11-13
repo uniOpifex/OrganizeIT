@@ -26,6 +26,8 @@ gem 'devise'
 gem 'omniauth'
 gem 'devise_token_auth'
 gem 'foreman'
+gem 'ffaker'
+gem 'hirb'
 # /End of Gemlist _____________________
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
