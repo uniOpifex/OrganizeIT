@@ -13,6 +13,7 @@ import {
 
 import SignUpLogIn from "./components/SignUpLogIn";
 import ItemsList from "./components/ItemsList";
+import Navbar from "./components/Navbar"
 import axios from "axios";
 
 class App extends Component {
@@ -117,17 +118,21 @@ class App extends Component {
     const ItemsComponent = () => (
       <ItemsList items={this.state.items} createItem={this.createItem} />
     );
+    const HomeComponent = () => (
+      <Navbar/>
+    );
 
     return (
       <Router>
         <div>
           <Switch>
+            <Route path="/" render={HomeComponent} />
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />
           </Switch>
 
           {this.state.signedIn ? (
-            <Redirect to="/items" />
+            <Redirect to="/" />
           ) : (
             <Redirect to="/signUp" />
           )}
