@@ -4,6 +4,9 @@ import Item from "./Item";
 import ItemForm from "./ItemForm";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ReactTable from 'react-table'
+import 'react-table/react-table.css'
+
 
 const ListWrapper = styled.div`
   display: flex;
@@ -70,14 +73,43 @@ class ItemsList extends Component {
   };
 
   render() {
+    const data = [{
+      name: 'Tanner Linsley',
+      age: 26,
+      friend: {
+        name: 'Jason Maurer',
+        age: 23,
+      }
+    }]
+
+    const columns = [{
+      Header: 'Name',
+      accessor: 'name' // String-based value accessors!
+    }, {
+      Header: 'Age',
+      accessor: 'age',
+      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+    }, {
+      id: 'friendName', // Required because our accessor is not a string
+      Header: 'Friend Name',
+      accessor: d => d.friend.name // Custom value accessors!
+    }, {
+      Header: props => <span>Friend Age</span>, // Custom header components!
+      accessor: 'friend.age'
+    }]
     return (
       <ListWrapper>
         <List>
-          <h1>Items</h1>
+          <h1>Items: </h1>
           {this.state.items.length > 0 ? this.state.items : null}
-
-          <ItemForm createItem={this.createItem} />
+          <ReactTable
+            data={data}
+            columns={columns}
+          />
+          
+          
         </List>
+        <ItemForm createItem={this.createItem} />
       </ListWrapper>
     );
   }
