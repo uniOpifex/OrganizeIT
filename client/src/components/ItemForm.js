@@ -6,7 +6,8 @@ class ItemForm extends Component {
   
       state = {
           title: '',
-          content: ''
+          description: ''
+          
       }
 
 
@@ -14,9 +15,9 @@ class ItemForm extends Component {
         event.preventDefault()
         this.props.createItem(
             this.state.title,
-            this.state.content
+            this.state.description
         )
-    }
+    } 
   
     handleChange = (event) => {
         const newState = {...this.state}
@@ -34,8 +35,8 @@ class ItemForm extends Component {
                         <input onChange={this.handleChange} type="text" name="title" value={this.state.title}/>
                     </div>
                     <div>
-                        <label htmlFor="content">Content: </label>
-                        <input onChange={this.handleChange} type="content" name="content" value={this.state.content}/>
+                        <label htmlFor="content">Description: </label>
+                        <input onChange={this.handleChange} type="text" name="description" value={this.state.description}/>
                     </div>
                     
                     <button onClick={this.createItem}>Submit</button>

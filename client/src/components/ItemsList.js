@@ -53,11 +53,13 @@ class ItemsList extends Component {
       return [];
     }
   };
-  createItem = async (title, description) => {
+  createItem = async (title,description) => {
     try {
       const payload = {
-        title,
-        description
+        items: {
+          title,
+          description
+        }
       };
       await axios.post(`/api/items`, payload);
     } catch (error) {
