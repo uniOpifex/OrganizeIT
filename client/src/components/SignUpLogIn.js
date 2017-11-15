@@ -29,6 +29,13 @@ const LoginItem = styled.div`
 `;
 
 class SignUpLogIn extends Component {
+    state = {
+        showLogin: true
+    }
+
+    toggleLogin = () => {
+        this.setState({showLogin: !this.state.showLogin})
+    }
   state = {
     email: "",
     password: "",
@@ -63,7 +70,7 @@ class SignUpLogIn extends Component {
             <form>
               <div className="flex-item">
                 <label htmlFor="email">
-                  <i class="fa fa-envelope" aria-hidden="true" /> E-mail:{" "}
+                  <i className="fa fa-envelope" aria-hidden="true" /> E-mail:{" "}
                 </label>
                 <input
                   className="form-field"

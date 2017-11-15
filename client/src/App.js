@@ -10,7 +10,8 @@ import {
 import {
   saveAuthTokens,
   setAxiosDefaults,
-  userIsLoggedIn
+  userIsLoggedIn,
+  clearAuthTokens
 } from "./util/SessionHeaderUtil";
 
 import styled from "styled-components";
@@ -40,51 +41,83 @@ class App extends Component {
 
   async componentWillMount() {
     try {
-      const signedIn = userIsLoggedIn();
-    } catch (error) {
-      console.log(error);
-    }
-  }
+        const signedIn = userIsLoggedIn()
 
-  signUp = async (email, password, password_confirmation) => {
+        if (signedIn) {
+            setAxiosDefaults()
+        }
+
+        this.setState({
+            signedIn,
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+signUp = async (email, password, password_confirmation) => {
     try {
-      const payload = {
-        email: email,
-        password: password,
-        password_confirmation: password_confirmation
-      };
-      const response = await axios.post("/auth", payload);
-      saveAuthTokens(response.headers);
+        const payload = {
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+        }
+        const response = await axios.post('/auth', payload)
+        saveAuthTokens(response.headers)
 
-      this.setState({ signedIn: true });
+        this.setState({
+            signedIn: true,
+        })
+
     } catch (error) {
-      console.log(error);
+        console.log(error)
     }
-  };
+}
 
-  signIn = async (email, password) => {
+signIn = async (email, password) => {
     try {
-      const payload = {
-        email,
-        password
-      };
-      const response = await axios.post("/auth/sign_in", payload);
-      saveAuthTokens(response.headers);
-      const items = await this.getItems();
+        const payload = {
+            email,
+            password
+        }
+        const response = await axios.post('/auth/sign_in', payload)
+        saveAuthTokens(response.headers)
 
-      this.setState({ signedIn: true});
+        this.setState({
+            signedIn: true,
+            
+        })
+
     } catch (error) {
-      console.log(error);
+        console.log(error)
     }
-  }
+}
+
+signOut = async (event) => {
+    try {
+        event.preventDefault()
+
+        await axios.delete('/auth/sign_out')
+
+        clearAuthTokens();
+
+        this.setState({signedIn: false})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
   render() {
     const SignUpLogInComponent = () => (
-      <SignUpLogIn signUp={this.signUp} signIn={this.signIn} />
+      <SignUpLogIn 
+       signUp={this.signUp}
+        signIn={this.signIn}/> 
     );
 
     const ItemsComponent = () => (
-      <ItemsList items={this.state.items} createItem={this.createItem} />
+      <ItemsList createItem={this.createItem} />
     );
     const HomeComponent = () => (<Home />)
 
@@ -110,6 +143,6 @@ class App extends Component {
       </Router>
     );
   }
-}
 
+}
 export default App;

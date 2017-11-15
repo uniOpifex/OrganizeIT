@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Item from "./Item";
 import ItemForm from "./ItemForm";
-import { Link } from "react-router-dom";
+import {setAxiosDefaults, userIsLoggedIn} from '../util/SessionHeaderUtil'
+
+// import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
@@ -14,17 +16,18 @@ const ListWrapper = styled.div`
   min-height: 100%;
   border-radius: 10px;
   height: 100vh;
+
 `;
 
 const List = styled.div`
   display: flex;
-  justify-content: start;
+  flex-direction: column;
   margin: 50px 0 0 100px;
   text-align: left;
   background-color: blue;
   padding: 30px;
   border-radius: 20px;
-  flex-direct: start;
+  
 `;
 
 class ItemsList extends Component {
@@ -34,16 +37,19 @@ class ItemsList extends Component {
 
   async componentWillMount() {
     try {
-      let item = [];
-      let items = await this.getItems;
+      let items = []
+      setAxiosDefaults()
+      items = await this.getItems()
+      this.setState({items: items})
     } catch (error) {}
   }
   getItems = async () => {
     try {
-      const response = await axios.get("api/items");
-      return response.data;
+      const response = await axios.get('/api/items')
+      return response.data
     } catch (error) {
       console.log(error);
+      alert("some error occurred" + error);      
       return [];
     }
   };
@@ -53,7 +59,7 @@ class ItemsList extends Component {
         title,
         description
       };
-      await axios.post(`api/items/`, payload);
+      await axios.post(`/api/items`, payload);
     } catch (error) {
       console.log(error);
       alert("some error occurred");
@@ -63,9 +69,9 @@ class ItemsList extends Component {
   updateItem = async () => {
     try {
       const itemId = this.props.match.params.cityId;
-      const response = await axios.get(`/post/${itemId}`);
+      const response = await axios.get(`/api/item/${itemId}`);
       await this.setState({ item: response.data });
-      const itemResponse = await axios.get(`/post`);
+      const itemResponse = await axios.get(`/api/item`);
       await this.setState({ items: itemResponse.data });
     } catch (err) {
       console.log(err);
@@ -73,43 +79,27 @@ class ItemsList extends Component {
   };
 
   render() {
-    const data = [{
-      name: 'Tanner Linsley',
-      age: 26,
-      friend: {
-        name: 'Jason Maurer',
-        age: 23,
-      }
-    }]
+    const data = this.state.items
 
     const columns = [{
-      Header: 'Name',
-      accessor: 'name' // String-based value accessors!
+      Header: 'Item',
+      accessor: 'title' // String-based value accessors!
     }, {
-      Header: 'Age',
-      accessor: 'age',
+      Header: 'Description',
+      accessor: 'description',
       Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    }, {
-      id: 'friendName', // Required because our accessor is not a string
-      Header: 'Friend Name',
-      accessor: d => d.friend.name // Custom value accessors!
-    }, {
-      Header: props => <span>Friend Age</span>, // Custom header components!
-      accessor: 'friend.age'
     }]
     return (
       <ListWrapper>
         <List>
           <h1>Items: </h1>
-          {this.state.items.length > 0 ? this.state.items : null}
           <ReactTable
             data={data}
             columns={columns}
           />
-          
-          
+          <ItemForm createItem={this.createItem} />
         </List>
-        <ItemForm createItem={this.createItem} />
+        
       </ListWrapper>
     );
   }

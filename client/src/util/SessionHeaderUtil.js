@@ -22,7 +22,6 @@ export function userIsLoggedIn() {
           !!localStorage.getItem('uid') &&
           !!localStorage.getItem('expiry')
       )
-  
       return userLoggedIn
   }
 
