@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import AppBar from 'material-ui/AppBar';
 
 const NavWrap = styled.div`
   color: black;
@@ -14,7 +13,6 @@ background-color: green;
 const NavLinks = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   font-size: 10px;
   color: black;
   
@@ -22,8 +20,6 @@ const NavLinks = styled.div`
 
 const Item = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   font-size: 2em;
   color: white;
   padding: 2px;
@@ -71,15 +67,7 @@ const Topnav  =styled.div`
   }
 }
 `
-//-----
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-      x.className += " responsive";
-  } else {
-      x.className = "topnav";
-  }
-}
+
 
 
 
@@ -87,7 +75,7 @@ function myFunction() {
 
 const NavBar = () => {
   return (
-    <AppBar>
+    <NavWrap>
     <Topnav id="myTopnav">
       <NavLinks>
         <Item> <Link to="/signIn"><bold>Sign Out</bold></Link></Item>
@@ -105,13 +93,10 @@ const NavBar = () => {
         </Item>
         <Item>
           <Link to="/items/" >items</Link>
-        </Item>
-        <Item>
-          <a href="javascript:void(0);"  className="icon">&#9776;</a>
         </Item>  
       </NavLinks>
     </Topnav>
-    </AppBar>
+    </NavWrap>
   );
 };
 
