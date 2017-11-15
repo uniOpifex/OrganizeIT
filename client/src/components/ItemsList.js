@@ -1,23 +1,28 @@
 import React, { Component } from "react";
-
+import styled from "styled-components";
 import Item from "./Item";
 import ItemForm from "./ItemForm";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-// const ItemsList = (props) => {
+const ListWrapper = styled.div`
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 10px;
+  height: 100vh;
+`;
 
-//     const items = props.items.map((item) => {
-//         return (
-//             <Item {...item} deleteItem={props.deleteItem} key={item.id}/>
-//         )
-//     })
-//     return (
-//         <div>
-//             >
-//         </div>
-//     )
-// }
+const List = styled.div`
+  display: flex;
+  justify-content: start;
+  margin: 50px 0 0 100px;
+  text-align: left;
+  background-color: blue;
+  padding: 30px;
+  border-radius: 20px;
+  flex-direct: start;
+`;
 
 class ItemsList extends Component {
   state = {
@@ -66,12 +71,14 @@ class ItemsList extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Items</h1>
-        {this.state.items.length > 0 ? this.state.items : null}
-        <hr />
-        <ItemForm createItem={this.createItem} />
-      </div>
+      <ListWrapper>
+        <List>
+          <h1>Items</h1>
+          {this.state.items.length > 0 ? this.state.items : null}
+
+          <ItemForm createItem={this.createItem} />
+        </List>
+      </ListWrapper>
     );
   }
 }
