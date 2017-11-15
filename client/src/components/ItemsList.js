@@ -27,7 +27,7 @@ const List = styled.div`
   background-color: blue;
   padding: 30px;
   border-radius: 20px;
-  
+  width: 50vw;
 `;
 
 class ItemsList extends Component {
