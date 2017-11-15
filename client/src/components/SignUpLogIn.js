@@ -3,43 +3,29 @@ import styled from "styled-components";
 
 const LoginWrapper = styled.div`
   display: flex;
-  background-color: yellow;
-  
+  flex-direction: column;
+    justify-content: center;
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 10px;
+  align-items: center;
+  height: 100vh;
 `;
+
 const LoginItem = styled.div`
   display: flex;
-  flex-direction: column;
   text-align: center;
+  justify-content: center;
+  background-color: blue;
+  padding: 30px;
+  border-radius: 20px;
+  flex-direct: column;
 
-  .flex-container {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .row {
-    width: auto;
-    border: 1px solid blue;
-  }
+  form {
+      flex-direction: row;
+      text-align: left;
+  };
 
-  .flex-item {
-    background-color: tomato;
-    padding: 5px;
-    width: 20px;
-    height: 20px;
-    margin: 10px;
-    line-height: 20px;
-    color: white;
-    font-weight: bold;
-    font-size: 2em;
-    text-align: center;
-  }
 `;
 
 class SignUpLogIn extends Component {
@@ -73,7 +59,7 @@ class SignUpLogIn extends Component {
     return (
       <LoginWrapper>
         <div className="flex-container">
-          <div className="row">
+          <LoginItem>
             <form>
               <div className="flex-item">
                 <label htmlFor="email">
@@ -115,7 +101,7 @@ class SignUpLogIn extends Component {
               <button onClick={this.signUp}>Sign Up</button>
               <button onClick={this.signIn}>Log In</button>
             </form>
-          </div>
+          </LoginItem>
         </div>
       </LoginWrapper>
     );

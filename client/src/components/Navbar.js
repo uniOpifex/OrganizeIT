@@ -78,7 +78,7 @@ const NavBar = () => {
     <NavWrap>
     <Topnav id="myTopnav">
       <NavLinks>
-        <Item> <Link to="/signIn"><bold>Sign Out</bold></Link></Item>
+        <Item> <Link to="/signUp"><bold>Sign Out</bold></Link></Item>
         <Item>
           <Link to="/">Home</Link>
         </Item>
