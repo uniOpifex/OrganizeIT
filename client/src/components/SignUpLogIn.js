@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import styled from 'styled-components'
+
+
 
 class SignUpLogIn extends Component {
 
@@ -31,9 +34,13 @@ class SignUpLogIn extends Component {
         this.setState(newState)
     }
 
+
+
     render() {
+
         return (
             <div>
+                <img src={{uri:'/client/src/clips/big-red-toolbox.png'}} alt="stuff"/>
                 <form>
                     <div>
                         <label htmlFor="email">E-mail: </label>

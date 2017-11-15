@@ -10,14 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112213019) do
+ActiveRecord::Schema.define(version: 20171114200922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "item_collections", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "user_id"
+    t.bigint "item_id"
+    t.index ["item_id"], name: "index_item_collections_on_item_id"
+    t.index ["user_id"], name: "index_item_collections_on_user_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.string "title"
-    t.string "content"
+    t.string "description"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,6 +71,8 @@ ActiveRecord::Schema.define(version: 20171112213019) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "item_collections", "items"
+  add_foreign_key "item_collections", "users"
   add_foreign_key "items", "users"
   add_foreign_key "posts", "users"
 end

@@ -1,56 +1,50 @@
 import React, { Component } from "react";
+
 import {
   Route,
   BrowserRouter as Router,
   Switch,
   Redirect
 } from "react-router-dom";
+
 import {
   saveAuthTokens,
   setAxiosDefaults,
   userIsLoggedIn
 } from "./util/SessionHeaderUtil";
 
+import styled from "styled-components";
+import axios from "axios";
+
+//START--
+import Home from "./components/Home";
 import SignUpLogIn from "./components/SignUpLogIn";
 import ItemsList from "./components/ItemsList";
-import Navbar from "./components/Navbar"
-import axios from "axios";
+import Navbar from "./components/Navbar";
+import ItemCollectionList from "./components/ItemCollectionList"
+import StorageItemList from "./components/StorageItemsList"
+//END--OF--IMPORTED--COMPONENTS
+const BodyWrap = styled.div`
+  background-color: red;
+  min-height: 100vh;
+
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -20px;
+`;
 
 class App extends Component {
   state = {
-    signedIn: false,
-    items: []
+    signedIn: false
   };
 
   async componentWillMount() {
     try {
       const signedIn = userIsLoggedIn();
-
-      let items = [];
-      if (signedIn) {
-        setAxiosDefaults();
-        items = await this.getItems();
-      }
-      this.setState({
-        items: items,
-        signedIn
-      });
     } catch (error) {
       console.log(error);
     }
   }
-
-  c;
-
-  getItems = async () => {
-    try {
-      const response = await axios.get("/items");
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  };
 
   signUp = async (email, password, password_confirmation) => {
     try {
@@ -78,37 +72,11 @@ class App extends Component {
       saveAuthTokens(response.headers);
       const items = await this.getItems();
 
-      this.setState({ signedIn: true, items });
+      this.setState({ signedIn: true});
     } catch (error) {
       console.log(error);
     }
-  };
-
-  createItem = async (title,content) => {
-    try {
-      const payload = {
-        title,
-        content
-      };
-      await axios.post(`/items/`, payload)
-      } catch (error) {
-      console.log(error);
-      alert("some error occurred");
-    }
-  };
-
-
-  updateItem = async () => {
-    try {
-      const itemId = this.props.match.params.cityId;
-      const response = await axios.get(`/post/${itemId}`);
-      await this.setState({ item: response.data });
-      const itemResponse = await axios.get(`/post`);
-      await this.setState({ items: itemResponse.data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }
 
   render() {
     const SignUpLogInComponent = () => (
@@ -118,25 +86,27 @@ class App extends Component {
     const ItemsComponent = () => (
       <ItemsList items={this.state.items} createItem={this.createItem} />
     );
-    const HomeComponent = () => (
-      <Navbar/>
-    );
+    const HomeComponent = () => (<Home />)
+
+    const ItemCollectionComponent = () => (
+            <ItemCollectionList />
+    )
+    const ItemStorageComponent = () => (
+      <StorageItemList/>
+    )
 
     return (
       <Router>
-        <div>
+        <BodyWrap>
+          <Navbar />
           <Switch>
-            <Route path="/" render={HomeComponent} />
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />
+            <Route exact path="/collections" render={ItemCollectionComponent}/>
+            <Route exact path="/storage-items" render={ItemStorageComponent} />
+            <Route path="/" render={Home}/>
           </Switch>
-
-          {this.state.signedIn ? (
-            <Redirect to="/" />
-          ) : (
-            <Redirect to="/signUp" />
-          )}
-        </div>
+        </BodyWrap>
       </Router>
     );
   }

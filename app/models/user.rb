@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :items, dependent: :destroy
+  has_many :item_collections, dependent: :destroy
 end
