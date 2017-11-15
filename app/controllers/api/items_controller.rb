@@ -36,9 +36,12 @@ class Api::ItemsController < ApplicationController
     end
   
     def destroy
-      @item = item.find(params[:id]).delete
-  
-      render status: :ok
+      item_id = params[:id]
+      @item = Item.find_by_id(item_id)
+      @item.delete
+      render json: {
+          msg: 'Delete the item successfully'
+      }
     end
   
     private

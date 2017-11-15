@@ -2,13 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Item from "./Item";
 import ItemForm from "./ItemForm";
-import {setAxiosDefaults, userIsLoggedIn} from '../util/SessionHeaderUtil'
+import { setAxiosDefaults, userIsLoggedIn } from "../util/SessionHeaderUtil";
 
 // import { Link } from "react-router-dom";
 import axios from "axios";
-import ReactTable from 'react-table'
-import 'react-table/react-table.css'
-
 
 const ListWrapper = styled.div`
   display: flex;
@@ -16,7 +13,6 @@ const ListWrapper = styled.div`
   min-height: 100%;
   border-radius: 10px;
   height: 100vh;
-
 `;
 
 const List = styled.div`
@@ -27,7 +23,22 @@ const List = styled.div`
   background-color: blue;
   padding: 30px;
   border-radius: 20px;
-  width: 50vw;
+  width: 75vw;
+  height: 100%;
+
+  table {
+    tr {
+=      padding: 20px;
+    }
+    tr td {
+    border-bottom:1pt solid black;
+    margin-bottom: 2px;
+  }
+    tr td#firstCol {
+    width: 200px;
+  
+    }
+  }
 `;
 
 class ItemsList extends Component {
@@ -37,23 +48,23 @@ class ItemsList extends Component {
 
   async componentWillMount() {
     try {
-      let items = []
-      setAxiosDefaults()
-      items = await this.getItems()
-      this.setState({items: items})
+      let items = [];
+      setAxiosDefaults();
+      items = await this.getItems();
+      this.setState({ items: items });
     } catch (error) {}
   }
   getItems = async () => {
     try {
-      const response = await axios.get('/api/items')
-      return response.data
+      const response = await axios.get("/api/items");
+      return response.data;
     } catch (error) {
       console.log(error);
-      alert("some error occurred" + error);      
+      alert("some error occurred" + error);
       return [];
     }
   };
-  createItem = async (title,description) => {
+  createItem = async (title, description) => {
     try {
       const payload = {
         items: {
@@ -62,6 +73,7 @@ class ItemsList extends Component {
         }
       };
       await axios.post(`/api/items`, payload);
+      this.forceUpdate()
     } catch (error) {
       console.log(error);
       alert("some error occurred");
@@ -70,40 +82,60 @@ class ItemsList extends Component {
 
   updateItem = async () => {
     try {
-      const itemId = this.props.match.params.cityId;
-      const response = await axios.get(`/api/item/${itemId}`);
-      await this.setState({ item: response.data });
-      const itemResponse = await axios.get(`/api/item`);
-      await this.setState({ items: itemResponse.data });
     } catch (err) {
       console.log(err);
     }
   };
 
-  render() {
-    const data = this.state.items
+  deleteItem = async event => {
+    try {
+      let itemId = event.target.id;
+      event.preventDefault();
+      await axios.delete(`/api/items/${itemId}`);
+      var array = this.state.items;
+      var index = array.indexOf(itemId)
+      array.splice(index, 1);
+      this.setState({items: array })
+      // await this.setState({ redirect: true }) //WHY does this break everything?!
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    const columns = [{
-      Header: 'Item',
-      accessor: 'title' // String-based value accessors!
-    }, {
-      Header: 'Description',
-      accessor: 'description',
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    }]
+
+
+  render() {
     return (
       <ListWrapper>
         <List>
-          <h1>Items: </h1>
-          <ReactTable
-            data={data}
-            columns={columns}
-          />
-          <ItemForm createItem={this.createItem} />
+          <table>
+            <tbody>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tbody>
+            {this.state.items
+              ? this.state.items.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td id="firstCol">{item.title}</td>
+                      <td>{item.description}</td>
+                      <td> <a href="">Edit</a></td>
+                      <td><button id={item.id} onClick={this.deleteItem}>
+                        Delete
+                      </button></td>
+                    </tr>
+                    
+                    
+                  );
+                })
+              : null}
+          </table>
+          <ItemForm createItem={this.createItem}/>
         </List>
-        
       </ListWrapper>
-    );
+    );  
   }
 }
 

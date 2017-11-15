@@ -30,13 +30,14 @@ class ItemForm extends Component {
           return (
               <div>
                  <form>
+                     <h2>Create a new Item</h2>
                     <div>
                         <label htmlFor="Title">Title </label>
                         <input onChange={this.handleChange} type="text" name="title" value={this.state.title}/>
                     </div>
                     <div>
                         <label htmlFor="content">Description: </label>
-                        <input onChange={this.handleChange} type="text" name="description" value={this.state.description}/>
+                        <input onChange={this.handleChange} type="textarea" name="description" value={this.state.description}/>
                     </div>
                     
                     <button onClick={this.createItem}>Submit</button>
