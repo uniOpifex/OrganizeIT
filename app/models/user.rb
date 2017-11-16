@@ -7,5 +7,5 @@ class User < ActiveRecord::Base
 
   has_many :items, dependent: :destroy
   has_many :item_collections, dependent: :destroy
-  has_many :item_storages, dependent: :destroy
+  has_many :storage_items, dependent: :destroy
 end

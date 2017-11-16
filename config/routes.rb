@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     resources :items 
-    resources :item_collections
+    resources :storage_items
     resources :users do
       resources :items 
       resources :item_collections
