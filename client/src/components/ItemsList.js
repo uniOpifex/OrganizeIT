@@ -43,15 +43,18 @@ const List = styled.div`
 
 class ItemsList extends Component {
   state = {
-    items: []
+    items: [],
+    storage_items: []
   };
 
   async componentWillMount() {
     try {
       let items = [];
+      let storage_items = [];
       setAxiosDefaults();
       items = await this.getItems();
-      this.setState({ items: items });
+      storage_items = await this.getstorage_Items();
+      this.setState({ items: items, storage_items: storage_items });
     } catch (error) {}
   }
   getItems = async () => {
@@ -64,12 +67,23 @@ class ItemsList extends Component {
       return [];
     }
   };
-  createItem = async (title, description) => {
+  getstorage_Items = async () => {
+    try {
+      const response = await axios.get("/api/storage_items");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      alert("some error occurred" + error);
+      return [];
+    }
+  };
+  createItem = async (title, description, storage_item_id) => {
     try {
       const payload = {
         items: {
           title,
-          description
+          description,
+          storage_item_id
         }
       };
       await axios.post(`/api/items`, payload);
@@ -128,13 +142,11 @@ class ItemsList extends Component {
                         Delete
                       </button></td>
                     </tr>
-                    
-                    
                   );
                 })
               : null}
           </table>
-          <ItemForm createItem={this.createItem}/>
+          {<ItemForm createItem={this.createItem} storage_items={this.state.storage_items}/>}
         </List>
       </ListWrapper>
     );  
