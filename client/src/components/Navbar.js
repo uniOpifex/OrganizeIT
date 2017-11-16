@@ -89,7 +89,7 @@ const NavBar = () => {
           <Link to="/collections/">Collections</Link>
         </Item>
         <Item>
-          <Link to="/storage/">Storage Items</Link>
+          <Link to="/storage-items/">Storage Items</Link>
         </Item>
         <Item>
           <Link to="/items/" >items</Link>
