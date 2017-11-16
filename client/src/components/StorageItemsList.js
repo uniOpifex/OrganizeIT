@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import axios from 'axios'
 import styled from 'styled-components'
+import Item from "./Item";
+import StorageItemForm from "./StorageItemForm";
+import { setAxiosDefaults, userIsLoggedIn } from "../util/SessionHeaderUtil";
 
 
 
@@ -42,7 +46,41 @@ table {
 
 class StorageItemList extends Component {
     state = {
-        items: []
+        storage_items: []
+      };
+
+      async componentWillMount() {
+        try {
+          let storage_items = [];
+          setAxiosDefaults();
+          storage_items = await this.getstorage_Items();
+          this.setState({ storage_items: storage_items });
+        } catch (error) {}
+      }
+      getstorage_Items = async () => {
+        try {
+          const response = await axios.get("/api/storage_items");
+          return response.data;
+        } catch (error) {
+          console.log(error);
+          alert("some error occurred" + error);
+          return [];
+        }
+      };
+      createStorageItem = async (title, description) => {
+        try {
+          const payload = {
+            storage_items: {
+              title,
+              description
+            }
+          };
+          await axios.post(`/api/storage_items`, payload);
+          this.forceUpdate()
+        } catch (error) {
+          console.log(error);
+          alert("some error occurred");
+        }
       };
 
 
@@ -57,8 +95,8 @@ class StorageItemList extends Component {
               <th>Edit</th>
               <th>Delete</th>
             </tbody>
-            {this.state.items
-              ? this.state.items.map((item, index) => {
+            {this.state.storage_items
+              ? this.state.storage_items.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td id="firstCol">{item.title}</td>
@@ -77,6 +115,7 @@ class StorageItemList extends Component {
                 })
               : null}
           </table>
+          <StorageItemForm createStorageItem={this.createStorageItem}/>
         </List>
       </ListWrapper>
     );

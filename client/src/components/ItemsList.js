@@ -112,6 +112,7 @@ class ItemsList extends Component {
             <tbody>
               <th>Title</th>
               <th>Description</th>
+              <th>Storage Item</th>
               <th>Edit</th>
               <th>Delete</th>
             </tbody>
@@ -121,6 +122,7 @@ class ItemsList extends Component {
                     <tr key={index}>
                       <td id="firstCol">{item.title}</td>
                       <td>{item.description}</td>
+                      <td>Stored</td>
                       <td> <a href="">Edit</a></td>
                       <td><button id={item.id} onClick={this.deleteItem}>
                         Delete

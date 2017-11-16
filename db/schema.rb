@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116162013) do
+ActiveRecord::Schema.define(version: 20171116192437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,18 @@ ActiveRecord::Schema.define(version: 20171116162013) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "storage_item_id"
+    t.index ["storage_item_id"], name: "index_items_on_storage_item_id"
     t.index ["user_id"], name: "index_items_on_user_id"
+  end
+
+  create_table "items_are_stored_ins", force: :cascade do |t|
+    t.bigint "storage_items_id"
+    t.bigint "items_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["items_id"], name: "index_items_are_stored_ins_on_items_id"
+    t.index ["storage_items_id"], name: "index_items_are_stored_ins_on_storage_items_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -82,7 +93,10 @@ ActiveRecord::Schema.define(version: 20171116162013) do
 
   add_foreign_key "item_collections", "items"
   add_foreign_key "item_collections", "users"
+  add_foreign_key "items", "storage_items"
   add_foreign_key "items", "users"
+  add_foreign_key "items_are_stored_ins", "items", column: "items_id"
+  add_foreign_key "items_are_stored_ins", "storage_items", column: "storage_items_id"
   add_foreign_key "posts", "users"
   add_foreign_key "storage_items", "users"
 end
