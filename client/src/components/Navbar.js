@@ -84,10 +84,7 @@ const NavBar = (props) => {
           <Link to="/">organizIt.io</Link>
         </Item>
         <Item>
-          <Link to="/user/profile">About</Link>
-        </Item>
-        <Item>
-          <Link to="/collections/">Collections</Link>
+          <Link to="/collections/">About</Link>
         </Item>
         <Item>
           <Link to="/storage-items/">Storage Items</Link>

@@ -19,6 +19,7 @@ import axios from "axios";
 
 //START--
 import Home from "./components/Home";
+import About from "./components/About";
 import SignUpLogIn from "./components/SignUpLogIn";
 import ItemsList from "./components/ItemsList";
 import Navbar from "./components/Navbar";
@@ -129,14 +130,16 @@ signOut = async (event) => {
     const StorageItemViewListComponent = () => (
         <StorageItemViewList/>
     )
-
+    const AboutComponent = () => {
+        <About/>
+    }
     return (
       <Router>
         <BodyWrap>
           <Navbar signedIn={this.state.signedIn} signOut={this.signOut}/>
           <Switch>
             <Route exact path="/" render={Home}/>
-            
+            <Route exact path="about" render={AboutComponent}/>
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />
             <Route exact path="/collections" render={ItemCollectionComponent}/>
