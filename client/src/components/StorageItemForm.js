@@ -30,7 +30,7 @@ class StorageItemForm extends Component {
           return (
               <div>
                  <form>
-                     <h2>Create a new Item</h2>
+                     <h2>Create a new Storage Item</h2>
                     <div>
                         <label htmlFor="Title">Title </label>
                         <input onChange={this.handleChange} type="text" name="title" value={this.state.title}/>

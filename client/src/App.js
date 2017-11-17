@@ -24,14 +24,12 @@ import ItemsList from "./components/ItemsList";
 import Navbar from "./components/Navbar";
 import ItemCollectionList from "./components/ItemCollectionList"
 import StorageItemList from "./components/StorageItemsList"
+import StorageItemViewList from "./components/StorageItemViewList"
 //END--OF--IMPORTED--COMPONENTS
 const BodyWrap = styled.div`
   background-color: red;
-  min-height: 100vh;
-
-  height: auto !important;
-  height: 100%;
   margin: 0 auto -20px;
+  height: 100%;
 `;
 
 class App extends Component {
@@ -113,7 +111,8 @@ signOut = async (event) => {
     const SignUpLogInComponent = () => (
       <SignUpLogIn 
        signUp={this.signUp}
-        signIn={this.signIn}/> 
+        signIn={this.signIn}
+        signOut={this.signOut}/> 
     );
 
     const ItemsComponent = () => (
@@ -131,13 +130,14 @@ signOut = async (event) => {
     return (
       <Router>
         <BodyWrap>
-          <Navbar signedIn={this.state.signedIn}/>
+          <Navbar signedIn={this.state.signedIn} signOut={this.signOut}/>
           <Switch>
+            <Route exact path="/" render={Home}/>
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />
             <Route exact path="/collections" render={ItemCollectionComponent}/>
             <Route exact path="/storage-items" render={ItemStorageComponent} />
-            <Route path="/" render={Home}/>
+            <Route path="/storage-items/:id/items" render={StorageItemViewList}/>
           </Switch>
         </BodyWrap>
       </Router>

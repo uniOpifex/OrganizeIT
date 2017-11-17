@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import Item from "./Item";
 import StorageItemForm from "./StorageItemForm";
 import { setAxiosDefaults, userIsLoggedIn } from "../util/SessionHeaderUtil";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -14,19 +16,18 @@ display: flex;
 min-width: 100%;
 min-height: 100%;
 border-radius: 10px;
-height: 100vh;
+max-height: 90%
 `;
 
 const List = styled.div`
 display: flex;
 flex-direction: column;
-margin: 50px 0 0 100px;
+margin: 50px 0 150px 100px;
 text-align: left;
 background-color: blue;
 padding: 30px;
 border-radius: 20px;
 width: 75vw;
-height: 100%;
 
 table {
   tr {
@@ -39,6 +40,9 @@ table {
   tr td#firstCol {
   width: 200px;
 
+  }
+  a {
+    color: white;
   }
 }
 `;
@@ -105,7 +109,7 @@ class StorageItemList extends Component {
             <tbody>
               <th>Title</th>
               <th>Description</th>
-              <th>Edit</th>
+              <th>View Items</th>
               <th>Delete</th>
             </tbody>
             {this.state.storage_items
@@ -115,8 +119,8 @@ class StorageItemList extends Component {
                       <td id="firstCol">{item.title}</td>
                       <td>{item.description}</td>
                       <td>
-                        {" "}
-                        <a href="">Edit</a>
+                        <Link to={`/storage-items/${item.id}/items`}>Storage Items</Link>
+
                       </td>
                       <td>
                         <button id={item.id} onClick={this.deleteStorageItem}>

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+
 const NavWrap = styled.div`
   color: black;
 `;
@@ -78,9 +79,9 @@ const NavBar = (props) => {
     <NavWrap>
     <Topnav id="myTopnav">
       <NavLinks>
-        <Item> <Link to="/signUp">{props.signedIn ? "Sign Out" : "Sign In"}</Link></Item>
+        <Item> <Link to="/signUp" >{props.signedIn ? "Sign Out" : "Sign In"}</Link></Item>
         <Item>
-          <Link to="/">Home</Link>
+          <Link to="/">organizIt.io</Link>
         </Item>
         <Item>
           <Link to="/user/profile">About</Link>

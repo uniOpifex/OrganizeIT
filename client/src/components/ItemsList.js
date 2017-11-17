@@ -12,19 +12,18 @@ const ListWrapper = styled.div`
   min-width: 100%;
   min-height: 100%;
   border-radius: 10px;
-  height: 100vh;
+  max-height: 90%;
 `;
 
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 50px 0 0 100px;
+  margin: 50px 0 150px 100px;
   text-align: left;
   background-color: blue;
   padding: 30px;
   border-radius: 20px;
   width: 75vw;
-  height: 100%;
 
   table {
     tr {
@@ -81,12 +80,12 @@ class ItemsList extends Component {
   };
   createItem = async (title, description, storage_item_id) => {
     try {
-      let storage_item = parseInt(storage_item_id)
+      //let storage_item_id = parseInt(storage_item_id)
       const payload = {
         items: {
           title,
           description,
-          storage_item
+          storage_item_id
         }
       };
       
@@ -124,6 +123,8 @@ class ItemsList extends Component {
 
 
   render() {
+    const findStorageName = (props) => {       
+    };
     return (
       <ListWrapper>
         <List>
@@ -141,7 +142,11 @@ class ItemsList extends Component {
                     <tr key={index}>
                       <td id="firstCol">{item.title}</td>
                       <td>{item.description}</td>
-                      <td>Stored</td>
+                      <td>{item.storage_item_id ? this.state.storage_items.map((n) =>{
+                          if (n.id == item.storage_item_id) {
+                            return (n.title);
+                          } else {return ("")}
+                      }): ("none")}</td>
                       <td> <a href="">Edit</a></td>
                       <td><button id={item.id} onClick={this.deleteItem}>
                         Delete
