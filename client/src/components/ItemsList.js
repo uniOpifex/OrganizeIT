@@ -89,7 +89,6 @@ class ItemsList extends Component {
         }
       };
       
-      alert(payload);
       await axios.post(`/api/items`, payload);
       this.forceUpdate()
     } catch (error) {
