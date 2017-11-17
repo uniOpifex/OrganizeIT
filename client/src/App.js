@@ -126,6 +126,9 @@ signOut = async (event) => {
     const ItemStorageComponent = () => (
       <StorageItemList/>
     )
+    const StorageItemViewListComponent = () => (
+        <StorageItemViewList/>
+    )
 
     return (
       <Router>
@@ -133,11 +136,12 @@ signOut = async (event) => {
           <Navbar signedIn={this.state.signedIn} signOut={this.signOut}/>
           <Switch>
             <Route exact path="/" render={Home}/>
+            
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />
             <Route exact path="/collections" render={ItemCollectionComponent}/>
             <Route exact path="/storage-items" render={ItemStorageComponent} />
-            <Route path="/storage-items/:id/items" render={StorageItemViewList}/>
+            <Route path="/storage-items/:id/" render={StorageItemViewListComponent}/>
           </Switch>
         </BodyWrap>
       </Router>
