@@ -90,8 +90,11 @@ const NavBar = (props) => {
           <Link to="/storage-items/">Storage Items</Link>
         </Item>
         <Item>
-          <Link to="/items/" >items</Link>
-        </Item>  
+          <Link to="/items/" >Items</Link>
+        </Item>
+        <Item>
+          <Link to="/stores/" >Local Stores</Link>
+        </Item>    
       </NavLinks>
     </Topnav>
     </NavWrap>

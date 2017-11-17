@@ -26,6 +26,7 @@ import Navbar from "./components/Navbar";
 import ItemCollectionList from "./components/ItemCollectionList"
 import StorageItemList from "./components/StorageItemsList"
 import StorageItemViewList from "./components/StorageItemViewList"
+import LocalStores from "./components/LocalStores"
 //END--OF--IMPORTED--COMPONENTS
 const BodyWrap = styled.div`
   background-color: red;
@@ -133,6 +134,9 @@ signOut = async (event) => {
     const AboutComponent = () => {
         <About/>
     }
+    const LocalStoresComponent = () => (
+        <LocalStores />
+    )
     return (
       <Router>
         <BodyWrap>
@@ -143,6 +147,7 @@ signOut = async (event) => {
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />
             <Route exact path="/collections" render={ItemCollectionComponent}/>
+            <Route exact path="/stores" render={LocalStoresComponent}/>
             <Route exact path="/storage-items" render={ItemStorageComponent} />
             <Route path="/storage-items/:id/" render={StorageItemViewListComponent}/>
           </Switch>
