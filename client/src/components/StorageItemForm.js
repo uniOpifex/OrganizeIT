@@ -7,7 +7,6 @@ class StorageItemForm extends Component {
       state = {
           title: '',
           description: ''
-          
       }
 
 
@@ -17,6 +16,7 @@ class StorageItemForm extends Component {
             this.state.title,
             this.state.description
         )
+    
     } 
   
     handleChange = (event) => {
@@ -39,7 +39,6 @@ class StorageItemForm extends Component {
                         <label htmlFor="content">Description: </label>
                         <input onChange={this.handleChange} type="textarea" name="description" value={this.state.description}/>
                     </div>
-                    
                     <button onClick={this.createStorageItem}>Submit</button>
                 </form>
               </div>

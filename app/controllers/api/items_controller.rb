@@ -47,7 +47,7 @@ class Api::ItemsController < ApplicationController
     private
   
     def item_params
-      params.require(:items).permit(:title, :description)
+      params.require(:items).permit(:title, :description, :storage_item_id)
     end
    
   end

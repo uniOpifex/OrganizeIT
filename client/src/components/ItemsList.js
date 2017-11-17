@@ -57,6 +57,8 @@ class ItemsList extends Component {
       this.setState({ items: items, storage_items: storage_items });
     } catch (error) {}
   }
+
+  
   getItems = async () => {
     try {
       const response = await axios.get("/api/items");
@@ -79,13 +81,16 @@ class ItemsList extends Component {
   };
   createItem = async (title, description, storage_item_id) => {
     try {
+      let storage_item = parseInt(storage_item_id)
       const payload = {
         items: {
           title,
           description,
-          storage_item_id
+          storage_item
         }
       };
+      
+      alert(payload);
       await axios.post(`/api/items`, payload);
       this.forceUpdate()
     } catch (error) {

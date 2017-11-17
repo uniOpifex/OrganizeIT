@@ -39,7 +39,7 @@ class Api::StorageItemsController < ApplicationController
   
     def destroy
       storage_item_id = params[:id]
-      @storage_item = storage_item.find_by_id(storage_item_id)
+      @storage_item = StorageItem.find(params[:id])
       @storage_item.delete
       render json: {
           msg: 'Delete the storage_item successfully'

@@ -5,7 +5,7 @@ class ItemForm extends Component {
   state = {
     title: "",
     description: "",
-    storage_item_id: ""
+    storage_item_id: 0
   };
 
   createItem = event => {
@@ -44,10 +44,11 @@ class ItemForm extends Component {
           </div>
           <div>
             <select onChange={this.handleChange} name="storage_item_id" value={this.state.storage_item_id}>
+            <option value="None">None</option>
             {this.props.storage_items
                 ? this.props.storage_items.map((item, index) => {
                     return (
-                        <option key ={index} value={item.id}>{item.title}</option>
+                        <option  onChange={this.handleChange} key ={index} value={item.id}>{item.title}</option>
                     );
                   })
                 : null}

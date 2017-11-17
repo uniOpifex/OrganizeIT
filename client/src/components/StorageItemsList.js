@@ -76,10 +76,25 @@ class StorageItemList extends Component {
             }
           };
           await axios.post(`/api/storage_items`, payload);
-          this.forceUpdate()
+          await this.forceUpdate()
+          await this.forceUpdate()
         } catch (error) {
           console.log(error);
           alert("some error occurred");
+        }
+      };
+      deleteStorageItem = async event => {
+        try {
+          let itemId = event.target.id;
+          event.preventDefault();
+          await axios.delete(`/api/storage_items/${itemId}`);
+          var array = this.state.storage_items;
+          var index = array.indexOf(itemId)
+          array.splice(index, 1);
+          this.setState({storage_items: array })
+          // await this.setState({ redirect: true }) //WHY does this break everything?!
+        } catch (err) {
+          console.log(err);
         }
       };
 
@@ -106,7 +121,7 @@ class StorageItemList extends Component {
                         <a href="">Edit</a>
                       </td>
                       <td>
-                        <button id={item.id} onClick={this.deleteItem}>
+                        <button id={item.id} onClick={this.deleteStorageItem}>
                           Delete
                         </button>
                       </td>
