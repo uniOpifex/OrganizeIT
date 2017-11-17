@@ -73,12 +73,12 @@ const Topnav  =styled.div`
 
 
 
-const NavBar = () => {
+const NavBar = (props) => {
   return (
     <NavWrap>
     <Topnav id="myTopnav">
       <NavLinks>
-        <Item> <Link to="/signUp">Sign Out</Link></Item>
+        <Item> <Link to="/signUp">{props.signedIn ? "Sign Out" : "Sign In"}</Link></Item>
         <Item>
           <Link to="/">Home</Link>
         </Item>

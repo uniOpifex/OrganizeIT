@@ -76,8 +76,6 @@ class StorageItemList extends Component {
             }
           };
           await axios.post(`/api/storage_items`, payload);
-          await this.forceUpdate()
-          await this.forceUpdate()
         } catch (error) {
           console.log(error);
           alert("some error occurred");

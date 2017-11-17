@@ -131,7 +131,7 @@ signOut = async (event) => {
     return (
       <Router>
         <BodyWrap>
-          <Navbar />
+          <Navbar signedIn={this.state.signedIn}/>
           <Switch>
             <Route exact path="/signUp" render={SignUpLogInComponent} />
             <Route exact path="/items" render={ItemsComponent} />

@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import Login from "./Login";
+import SignUp from "./SignUp";
+import SignUpLogInPlaceholder from "./SignUpLogInPlaceholder";
+
 const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
-    justify-content: center;
+  justify-content: center;
   min-width: 100%;
   min-height: 100%;
   border-radius: 10px;
@@ -22,20 +26,19 @@ const LoginItem = styled.div`
   flex-direct: column;
 
   form {
-      flex-direction: row;
-      text-align: left;
-  };
-
+    flex-direction: row;
+    text-align: left;
+  }
 `;
 
 class SignUpLogIn extends Component {
-    state = {
-        showLogin: true
-    }
+  state = {
+    showLogin: true
+  };
 
-    toggleLogin = () => {
-        this.setState({showLogin: !this.state.showLogin})
-    }
+  toggleLogin = () => {
+    this.setState({ showLogin: !this.state.showLogin });
+  };
   state = {
     email: "",
     password: "",
@@ -63,9 +66,21 @@ class SignUpLogIn extends Component {
   };
 
   render() {
+    const SignOut = props => {
+      if (props.signedIn === true) {
+        return alert("you are logged in");
+      } else {
+        return null;
+      }
+    };
+
+    const placeholder = (<SignUpLogInPlaceholder showLogin={this.state.showLogin} toggleLogin={this.toggleLogin}/>)
+    
+
     return (
       <LoginWrapper>
         <div className="flex-container">
+          <SignOut />
           <LoginItem>
             <form>
               <div className="flex-item">
